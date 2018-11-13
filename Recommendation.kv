@@ -1,0 +1,320 @@
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+#: import GridLayout kivy.uix.gridlayout
+#: import BoxLayout kivy.uix.boxlayout
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+
+ScreenManagement:
+    transition : FadeTransition()
+    MainScreen:
+    MapScreen:
+    EditScreen:
+
+
+<MainScreen>:
+    name: "MainScreen"
+    GridLayout:
+        id:main_screen_gridLayout
+        rows : 10
+        padding : 8
+        spacing : 4
+        Label:
+            text:"F&B Recommendation System"
+            text_size: self.size
+            size_hint_y: .2
+            halign: 'center'
+
+        BoxLayout:
+            orientation:'horizontal'
+            padding: 4
+            size_hint: 1, None
+            pos_hint: {'top': 1}
+            height: 30
+            Label:
+                text:"Search By Name:"
+                text_size: self.size
+                halign:'center'
+            TextInput:
+                id: name_textinput_id
+                size_hint_y: (.2,None)
+                height: 30
+                multiline: False
+                halign: 'left'
+            Label:
+                text: "Search By Food:"
+                text_size: self.size
+                halign:'center'
+            TextInput:
+                id:food_textinput_id
+                size_hint_y: (.2,None)
+                height: 30
+                multiline: False
+                halign: 'left'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, None
+            pos_hint: {'top': 1}
+            height: 30
+            Label:
+                text:"Search by Max Price:"
+                text_size: self.size
+                halign: 'center'
+            TextInput:
+                id: max_price_input_id
+                size_hint_y: (.2,None)
+                height: 30
+                multiline: False
+                halign: 'left'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: .5
+            Button:
+                text: "Search by Name"
+                size_hint: (1,.5)
+                font_size: 14
+                on_release: root.onSearchNameBtnClicked()
+            Button:
+                text:'Search by Food'
+                size_hint: (1,.5)
+                font_size: 14
+                on_release: root.onSearchFoodBtnClicked()
+            Button:
+                text:'Search by Max Price'
+                size_hint: (1,.5)
+                font_size: 14
+                on_release: root.onSearchByPriceBtnClicked()
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: .5
+            Button:
+                text:"Sort by Rating"
+                size_hint: (1,.5)
+                font_size: 14
+                on_release: root.onSortByRankBtnClicked()
+            Button:
+                text:"Sort by Price"
+                size_hint: (1,.5)
+                font_size: 14
+                on_release: root.onSortByPriceBtnClicked()
+            Button:
+                text:"Sort by Seating Capacity"
+                size_hint: (1,.5)
+                font_size: 14
+                on_release: root.onSortBySeatingCapacityBtnClicked()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: .5
+            Button:
+                text:"All Halal Food"
+                font_size: 14
+                on_release: root.onSearchHalalFoodBtnClicked()
+            Button:
+                text:"All Vegetarian Food"
+                font_size: 14
+                on_release: root.onSearchVegetarianBtnClicked()
+            Button:
+                text:"Nearest F&B"
+                font_size: 14
+                on_release: app.root.current = "MapScreen"
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: .5
+            Button:
+                text: "Clear"
+                font_size: 14
+                on_release: root.onClearBtnClicked()
+            Button:
+                on_release:app.root.current = "EditScreen"
+                text:"Edit Database"
+                font_size: 14
+        BoxLayout:
+            orientation: 'horizontal'
+            ListView:
+                id:main_screen_listview
+                padding: 4
+                adapter:
+                    ListAdapter(
+                    data = root.my_data,
+                    selection_mode='single',
+                    cls=ListItemButton,
+                    args_converter=lambda row_index, an_obj: {'text': an_obj,'size_hint_y': None,'height': 55, 'font_size': 14}
+                    )
+
+<EditScreen>:
+    name:"EditScreen"
+    #edit_screen_listview:edit_screen_listview
+    BoxLayout:
+        orientation:'vertical'
+        padding: 8
+        spacing: 8
+        ListView:
+            id:edit_screen_listview
+            padding: 4
+            adapter:
+                ListAdapter(
+                data = root.my_data,
+                selection_mode = 'single',
+                cls =ListItemButton,
+                args_converter=lambda row_index, an_obj: {'text': an_obj,'size_hint_y': None,'height': 55, 'font_size': 14},
+                allow_empty_selection = True
+                )
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+            Label:
+                text: "Name:"
+            TextInput:
+                id: edit_name_textinput
+            Label:
+                text: "Address:"
+            TextInput:
+                id: edit_address_textinput
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+
+            Label:
+                text:"Tel:"
+            TextInput:
+                id:edit_tel_textinput
+                multiline: False
+            Label:
+                text:"Seating Capacity:"
+            TextInput:
+                id:edit_seating_capacity_textinput
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+            Label:
+                text:"Rating:"
+            TextInput:
+                id:edit_rating_textinput
+                multiline: False
+            Label:
+                text:"Number of stores:"
+            TextInput:
+                id:edit_no_of_stores_textinput
+                multiline: False
+
+        BoxLayout:
+            size_hint_y:None
+            height: "40dp"
+
+            Label:
+                text:"Opening hour:"
+            TextInput:
+                id:edit_opening_hour_textinput
+                multiline:False
+            Label:
+                text:"Closing hour:"
+                multiline:False
+            TextInput:
+                id:edit_closing_hour_textinput
+                multiline:False
+        BoxLayout:
+            size_hint_y:None
+            height: "40dp"
+
+            Label:
+                text:"x Coordinates:"
+            TextInput:
+                id: edit_x_coordinates_textinput
+                multiline:False
+            Label:
+                text:"y Coordinates:"
+            TextInput:
+                id: edit_y_coordinates_textinput
+                multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+
+            Label:
+                text:"Halal Food Stores(,)"
+            TextInput:
+                id:edit_halal_food_store_textinput
+            Label:
+                text:"Vegetarian Food Stores(,)"
+            TextInput:
+                id:edit_vegetarian_food_store_textinput
+
+        BoxLayout:
+            size_hint_y:None
+            height: "40dp"
+            Label:
+                text:"Popular Food"
+            TextInput:
+                id:edit_popular_food_store_textinput
+            Label:
+                text:"Average Price"
+            TextInput:
+                id:edit_average_price_textinput
+
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+
+            Button:
+                text:"Insert New"
+                id: edit_insert_button_id
+                on_release: root.onInsertButtonClicked()
+
+            Button:
+                text:"Update"
+                id: edit_enter_button_id
+                on_release:root.onUpdateButtonClicked()
+            Button:
+                text:"Refresh listview"
+                id: edit_refresh_button_id
+                on_release: root.onRefreshButtonClicked()
+
+        BoxLayout:
+            size_hint_y:None
+            height: '40dp'
+            Button:
+                text: "Clear Inputs"
+                id:edit_clear_button_id
+                on_release:root.onClearInputsButtonClicked()
+            Button:
+                text:"Delete"
+                id: edit_delete_button_id
+                on_release:root.onDeleteButtonClicked()
+            Button:
+                text:"Back"
+                id:edit_back_button_id
+                on_release:app.root.current = "MainScreen"
+
+<MyListButton>:
+    on_release:self.parent.parent.parent.parent.parent.onItemSelected()
+
+<MapScreen>:
+    name: "MapScreen"
+    GridLayout:
+        orientation:'vertical'
+        rows: 2
+        BoxLayout:
+            canvas:
+                Rectangle:
+                    pos:self.pos
+                    size:(800,800)
+                    source: 'ntu_campus_map.png'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                halign:'center'
+                on_release: app.root.current = "MainScreen"
+                text: "Back"
+                font_size: 12
+            Label:
+                id: x_coordinate_id
+                font_size: 12
+            Label:
+                id: y_coordinate_id
+                font_size:12
