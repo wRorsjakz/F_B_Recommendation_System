@@ -7,7 +7,7 @@ Config.set('graphics', 'resizable', False)
 from kivy.core.window import Window
 # This sets the window to size (800,600)
 Window.clearcolor = (0.2, 0.2, 0.2, 0.5)
-Window.size = (800,700)
+Window.size = (1000,1000)
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder

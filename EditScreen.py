@@ -99,6 +99,7 @@ class EditScreen(Screen):
         self.ids.edit_popular_food_store_textinput.text = ""
         self.ids.edit_average_price_textinput.text = ""
 
+
     # Function called when Refresh Button is pressed
     # Deletes all data in my_data and deletes all data in the listview
     # Retrieves data in canteen_dictionary via retrieveDataForListView()
@@ -127,16 +128,20 @@ class EditScreen(Screen):
         # Gets a new dictionary for the new canteen
         new_canteen = self.getTextInputs()
 
+        # If user entered invalid details, .getTextInputs() would have returned None object
         if new_canteen != None:
+            # Console debugging
+            print("A new canteen with valid input has been entered by user")
             # Inserts the new canteen dictionary into canteen_dictionary
             canteen_dictionary[new_id] = new_canteen
+
+            # Console debugging
+            print("New canteen has been entered into database")
             self.onClearInputsButtonClicked()
-
-
 
     # This function is called when the Update button on the edit screen is pressed
     def onUpdateButtonClicked(self):
-        # Console Debuggins
+        # Console Debugging
         print("Edit Screen Update Button clicked")
 
         self.getTextInputs()
@@ -149,11 +154,12 @@ class EditScreen(Screen):
     # This function gets all the text in the text inputs
     # Returns a dictionary with appropriate key-value pairs
     def getTextInputs(self):
-        # TODO: Check if the list is empty
+
         # Creates an empty canteen dictionary with None values for each key
         new_canteen = createEmptyCanteen(keys)
 
-        # Try-except suite --- If there is no exception, returns a dictionary
+        # Try-except suite --- If there is no exception (ValueError when trying to convert to int/float,
+        # returns a dictionary
         # Except suite --- Popup box is displayed
         try:
             # For each 'suite', the first line retrieves the string from respective textinput
@@ -214,16 +220,24 @@ class EditScreen(Screen):
             # Console debugging
             print(new_canteen)
 
+            # Iterates through all the values in the dictionary
+            # Performs checks. If there are invalid inputs, then return None object
             for key in new_canteen.keys():
-                element  = new_canteen[key]
-                if len(element) == 0:
-                    print("Empty element", keys)
+                element = new_canteen[key]
+                # Checks if there was a textinput where the user entered nothing ( String )
+                if type(element) == None:
+                    return None
+                # Checks if the user only entered whitespaces
+                elif isinstance(element, str):
+                    if len(element) == 0:
+                        return None
                 else:
+                    # If no invalid inputs, then return dictionary
                     return new_canteen
 
         except Exception:
             # Console debugging
-            print(Exception)
+            print(type(Exception))
 
             # Displays a popup box with a message and a button which dismisses the popup
             content = BoxLayout(padding = 10, orientation = 'vertical')

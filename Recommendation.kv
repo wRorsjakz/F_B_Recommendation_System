@@ -295,26 +295,34 @@ ScreenManagement:
 
 <MapScreen>:
     name: "MapScreen"
-    GridLayout:
+    BoxLayout:
         orientation:'vertical'
-        rows: 2
+        padding: 2
+        rows:
         BoxLayout:
-            canvas:
-                Rectangle:
-                    pos:self.pos
-                    size:(800,800)
-                    source: 'ntu_campus_map.png'
+            orientation: 'vertical'
+
+            Button:
+                id: mapscreen_map_button
+                background_normal:'ntu_campus_map.png'
+                on_press: root.get_coordinates()
 
         BoxLayout:
-            orientation: 'horizontal'
+            orientation:'horizontal'
+            size_hint_y: .1
             Button:
                 halign:'center'
                 on_release: app.root.current = "MainScreen"
                 text: "Back"
                 font_size: 12
             Label:
-                id: x_coordinate_id
-                font_size: 12
+                text:"Cursor:"
+                id: cursor_coordinate_id
+                font_size: 14
+            Button:
+                text:"Confirm"
+                id: "map_screen_confirm_button"
             Label:
-                id: y_coordinate_id
-                font_size:12
+                text:"Chosen:"
+                id: chosen_coordinate_id
+                font_size:14
