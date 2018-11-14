@@ -155,8 +155,6 @@ class EditScreen(Screen):
                 displayPopup("Success!","Canteen details updated successfully","Dismiss")
                 self.onClearInputsButtonClicked()
 
-
-
     # This function is called when the delete button on the edit screen is pressed
     # It is responsible for deleting the a chosen canteen from the canteen dictionary
     def onDeleteButtonClicked(self):
@@ -276,19 +274,24 @@ class EditScreen(Screen):
     # Returns the address of the selected canteen
     def onListItemSelected(self, instance):
         print("Item selected")
+        try:
+            # Retrieves the string inside the item selected in the listview
+            element = self.ids.edit_screen_listview.adapter.selection[0].text
 
-        # Retrieves the string inside the item selected in the listview
-        element = self.ids.edit_screen_listview.adapter.selection[0].text
+            # Retrieves the address of the selected item and removes trailing whitespaces
+            address = element.split(",Address:")[1].strip()
 
-        # Retrieves the address of the selected item and removes trailing whitespaces
-        address = element.split(",Address:")[1].strip()
+            # Console debugging
+            print(address)
 
-        # Console debugging
-        print(address)
+            # This function retrieves the selected canteen from my_data database
+            # and appends all the values into the edittext
+            self.appendDataToListView(address)
 
-        # This function retrieves the selected canteen from my_data database
-        # and appends all the values into the edittext
-        self.appendDataToListView(address)
+        # When the user clicks on an already selected list item in the listview, an exception happens
+        # This catches the exception. The currently selected list item is deselected
+        except:
+            print("onListItemSelected exception")
 
     # Retrieves the canteen in the my_data database using the "address" key
     # Proceeds to append to the canteen's value into the respective edittext
