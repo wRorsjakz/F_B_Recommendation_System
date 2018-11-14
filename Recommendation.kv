@@ -17,18 +17,19 @@ ScreenManagement:
         id:main_screen_gridLayout
         rows : 10
         padding : 8
-        spacing : 4
-        Label:
-            text:"F&B Recommendation System"
-            text_size: self.size
-            size_hint_y: .2
-            halign: 'center'
-
+        spacing : 2
+        BoxLayout:
+            size_hint_y: .1
+            padding: 4
+            Label:
+                text:"F&B Recommendation System"
+                text_size: self.size
+                halign: 'center'
         BoxLayout:
             orientation:'horizontal'
             padding: 4
-            size_hint: 1, None
-            pos_hint: {'top': 1}
+            size_hint_y: .2
+
             height: 30
             Label:
                 text:"Search By Name:"
@@ -52,8 +53,9 @@ ScreenManagement:
                 halign: 'left'
         BoxLayout:
             orientation: 'horizontal'
-            size_hint: 1, None
-            pos_hint: {'top': 1}
+            padding: 4
+            size_hint_y: 0.2
+
             height: 30
             Label:
                 text:"Search by Max Price:"
@@ -65,47 +67,66 @@ ScreenManagement:
                 height: 30
                 multiline: False
                 halign: 'left'
-
+            Button:
+                text:"Your location"
+                font_size: 14
+                size_hint_y: .8
+                on_release: app.root.current = "MapScreen"
+            Label:
+                id: current_location_label_id
+                size_hint_y: (.2,None)
+                height: 30
+                multiline: False
+                halign: 'left'
+                canvas.before:
+                    Color:
+                        rgba: .2,.2,.2,.5
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
         BoxLayout:
             orientation: 'horizontal'
-            size_hint_y: .5
+            size_hint_y:0.2
+            height: 60
             Button:
                 text: "Search by Name"
-                size_hint: (1,.5)
+
                 font_size: 14
                 on_release: root.onSearchNameBtnClicked()
             Button:
                 text:'Search by Food'
-                size_hint: (1,.5)
+
                 font_size: 14
                 on_release: root.onSearchFoodBtnClicked()
             Button:
                 text:'Search by Max Price'
-                size_hint: (1,.5)
+
                 font_size: 14
                 on_release: root.onSearchByPriceBtnClicked()
         BoxLayout:
             orientation: 'horizontal'
-            size_hint_y: .5
+            size_hint_y:0.2
+            height: 60
             Button:
                 text:"Sort by Rating"
-                size_hint: (1,.5)
+
                 font_size: 14
                 on_release: root.onSortByRankBtnClicked()
             Button:
                 text:"Sort by Price"
-                size_hint: (1,.5)
+
                 font_size: 14
                 on_release: root.onSortByPriceBtnClicked()
             Button:
                 text:"Sort by Seating Capacity"
-                size_hint: (1,.5)
+
                 font_size: 14
                 on_release: root.onSortBySeatingCapacityBtnClicked()
 
         BoxLayout:
             orientation: 'horizontal'
-            size_hint_y: .5
+            size_hint_y: .2
+            height: 60
             Button:
                 text:"All Halal Food"
                 font_size: 14
@@ -117,11 +138,11 @@ ScreenManagement:
             Button:
                 text:"Nearest F&B"
                 font_size: 14
-                on_release: app.root.current = "MapScreen"
-
+                on_release: root.onSearchNearestBtnClicked()
         BoxLayout:
             orientation: 'horizontal'
-            size_hint_y: .5
+            size_hint_y:.2
+            height: 60
             Button:
                 text: "Clear"
                 font_size: 14
@@ -295,6 +316,7 @@ ScreenManagement:
 
 <MapScreen>:
     name: "MapScreen"
+    chosen_coordinate_id:chosen_coordinate_id
     BoxLayout:
         orientation:'vertical'
         padding: 2
@@ -313,6 +335,7 @@ ScreenManagement:
             Button:
                 halign:'center'
                 on_release: app.root.current = "MainScreen"
+                on_press: root.onBackBtnPressed()
                 text: "Back"
                 font_size: 12
             Label:
@@ -322,6 +345,8 @@ ScreenManagement:
             Button:
                 text:"Confirm"
                 id: "map_screen_confirm_button"
+                on_release: app.root.current = "MainScreen"
+
             Label:
                 text:"Chosen:"
                 id: chosen_coordinate_id

@@ -5,8 +5,8 @@ from kivy.config import Config
 
 Config.set('graphics', 'resizable', False)
 from kivy.core.window import Window
-# This sets the window to size (800,600)
-Window.size = (1000,1000)
+# This sets the window to size (800,800)
+Window.size = (800,700)
 # Sets the colour of the window background
 Window.clearcolor = (0.2, 0.2, 0.2, 0.5)
 
@@ -45,6 +45,11 @@ class MapScreen(Screen):
 
         # Console debugging
         print("Coordinate of cursor click:",coordinates)
+
+    # Function is called when the back button is pressed
+    def onBackBtnPressed(self):
+        # Resets the chosen_coordinate_id text to an empty string
+        self.ids.chosen_coordinate_id.text = ""
 
 class ScreenManagement(ScreenManager):
     pass

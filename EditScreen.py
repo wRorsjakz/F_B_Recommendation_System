@@ -10,7 +10,7 @@ from kivy.core.window import Window
 # The uuid module implements Universally Unique Identifiers as described in RFC 4122.
 import uuid
 
-# This sets the window to size (800,600)
+# This sets the window to size (800,700) pixels
 Window.clearcolor = (0.2, 0.2, 0.2, 0.5)
 Window.size = (800, 700)
 from kivy.app import App
@@ -21,6 +21,7 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 import functions
+from utility import displayPopup
 from data import canteen_dictionary,createEmptyCanteen, keys
 from kivy.clock import Clock
 from kivy.properties import ListProperty, StringProperty
@@ -137,7 +138,13 @@ class EditScreen(Screen):
 
             # Console debugging
             print("New canteen has been entered into database")
+            displayPopup("Success", "New canteen has been entered into database","Dismiss")
             self.onClearInputsButtonClicked()
+        else:
+
+            # Display a popup when there are None objects in the new_canteen dictionary
+            displayPopup("Please enter valid inputs!","Please enter valid inputs!","Dismiss")
+
 
     # This function is called when the Update button on the edit screen is pressed
     def onUpdateButtonClicked(self):
@@ -157,7 +164,7 @@ class EditScreen(Screen):
 
         # Creates an empty canteen dictionary with None values for each key
         new_canteen = createEmptyCanteen(keys)
-
+        print(new_canteen)
         # Try-except suite --- If there is no exception (ValueError when trying to convert to int/float,
         # returns a dictionary
         # Except suite --- Popup box is displayed
@@ -239,16 +246,7 @@ class EditScreen(Screen):
             # Console debugging
             print(type(Exception))
 
-            # Displays a popup box with a message and a button which dismisses the popup
-            content = BoxLayout(padding = 10, orientation = 'vertical')
-            label = Label(text="Please enter valid inputs!", halign = 'center')
-            dismiss_button = Button(text="Dismiss",size_hint = (None,None), size = (350,80),halign = 'center')
-            content.add_widget(label)
-            content.add_widget(dismiss_button)
-            popup = Popup(title='Please enter only valid input!',title_align = 'center', content=content,
-                          auto_dismiss=False,size_hint=(None, None), size=(400, 400))
-            # Binds the .dismiss function which closes the popup onto the button
-            dismiss_button.bind(on_press=popup.dismiss)
+            # Function from utility.py to display popup
+            displayPopup("Please enter valid inputs!","Please enter valid inputs!","Dismiss")
 
-            # Displays popup
-            popup.open()
+

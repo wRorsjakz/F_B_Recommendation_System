@@ -1,3 +1,9 @@
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+
+
 #The bubble sort function performs the sorting of lists within lists of our interest.
 def bubblesort_food(alist):
     for passnum in range(len(alist)-1):
@@ -29,7 +35,7 @@ def retrieveType(canteen, key):
     canteen_type = []
 
     # Loop to access the foodstalls of each canteen
-    for ID in range(1, len(canteen) + 1):
+    for ID in list(canteen.keys()):
 
         # If canteen looped has halal/vegetarian foodstalls
         if canteen[ID][key]:
@@ -149,7 +155,7 @@ def calculateDistance(user_x, user_y, canteen):
     canteen_distance_unsorted = []
 
     # Loop to extract location of each canteen
-    for ID in range(1, len(canteen) + 1):
+    for ID in list(canteen.keys()):
         # Extract x-coordinate of canteen looped from canteen database
         canteen_x = canteen[ID]["x_coordinate"]
 
@@ -175,3 +181,19 @@ def calculateDistance(user_x, user_y, canteen):
     return canteen_dist_sorted
 
 
+# Displays popup on screen with one button to dismiss it
+# Takes in 3 arguements - title: Title of the popup; label_message: message inside the popup
+# button_message - Text shown on the button
+def displayPopup(title,label_message,button_message):
+    content = BoxLayout(padding=10, orientation='vertical')
+    label = Label(text=title, halign='center')
+    dismiss_button = Button(text=button_message, size_hint=(None, None), size=(350, 80), halign='center')
+    content.add_widget(label)
+    content.add_widget(dismiss_button)
+    popup = Popup(title=label_message, title_align='center', content=content,
+                  auto_dismiss=False, size_hint=(None, None), size=(400, 400))
+    # Binds the .dismiss function which closes the popup onto the button
+    dismiss_button.bind(on_press=popup.dismiss)
+
+    # Displays popup
+    popup.open()
