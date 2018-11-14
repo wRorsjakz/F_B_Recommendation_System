@@ -8,6 +8,7 @@ from kivy.core.window import Window
 # This sets the window to size (800,800)
 Window.size = (800,700)
 # Sets the colour of the window background
+# Sets the colour of the window background
 Window.clearcolor = (0.2, 0.2, 0.2, 0.5)
 
 from kivy.app import App

@@ -1,4 +1,5 @@
 import kivy
+
 kivy.require('1.9.0')
 
 from kivy.config import Config
@@ -15,18 +16,9 @@ Window.clearcolor = (0.2, 0.2, 0.2, 0.5)
 Window.size = (800, 700)
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.label import Label
-from kivy.uix.popup import Popup
-from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
-from kivy.lang import Builder
-import functions
 from utility import displayPopup
-from data import canteen_dictionary,createEmptyCanteen, keys
-from kivy.clock import Clock
-from kivy.properties import ListProperty, StringProperty
-from kivy.uix.listview import ListItemButton
-from MainScreen import MainScreen
+from data import canteen_dictionary, createEmptyCanteen, keys
+from kivy.properties import ListProperty
 
 
 class EditScreen(Screen):
@@ -78,6 +70,10 @@ class EditScreen(Screen):
             self.ids.edit_screen_listview.adapter.data = self.my_data
             self.ids.edit_screen_listview._trigger_reset_populate()
 
+            # Binds the onListItemSelected() function to the listview adapters
+            # Will trigger the onListItemSelected() function whenever an item in the listview is clicked
+            self.ids.edit_screen_listview.adapter.bind(on_selection_change=self.onListItemSelected)
+
     # This function is called when the Clear Inputs button is pressed
     # It clears all the textinput
     def onClearInputsButtonClicked(self):
@@ -100,7 +96,6 @@ class EditScreen(Screen):
         self.ids.edit_popular_food_store_textinput.text = ""
         self.ids.edit_average_price_textinput.text = ""
 
-
     # Function called when Refresh Button is pressed
     # Deletes all data in my_data and deletes all data in the listview
     # Retrieves data in canteen_dictionary via retrieveDataForListView()
@@ -108,8 +103,8 @@ class EditScreen(Screen):
         # Console debugging
         print("On refresh button pressed")
 
-        # Deletes all the data current shown in the listview
-        del self.ids.edit_screen_listview.adapter.data[:]
+        # Function declared below
+        self.clearDataInListView()
 
         # This function retrieves the data from the canteen_dictionary to be displayed for the listview
         self.retrieveDataForListView()
@@ -117,6 +112,7 @@ class EditScreen(Screen):
     # Function called when Insert Button is pressed
     # Inserts a new canteen dictionary into canteen_dictionary
     def onInsertButtonClicked(self):
+
         # Console Debugging
         print("Edit Screen Insert Button clicked")
 
@@ -138,25 +134,54 @@ class EditScreen(Screen):
 
             # Console debugging
             print("New canteen has been entered into database")
-            displayPopup("Success", "New canteen has been entered into database","Dismiss")
+            displayPopup("Success", "New canteen has been entered into database", "Dismiss")
             self.onClearInputsButtonClicked()
         else:
-
             # Display a popup when there are None objects in the new_canteen dictionary
-            displayPopup("Please enter valid inputs!","Please enter valid inputs!","Dismiss")
-
+            displayPopup("Please enter valid inputs!", "Please enter valid inputs!", "Dismiss")
 
     # This function is called when the Update button on the edit screen is pressed
     def onUpdateButtonClicked(self):
         # Console Debugging
         print("Edit Screen Update Button clicked")
 
-        self.getTextInputs()
+        # Calls .getTextInputs() function to retrieve new inputs from textinputs
+        updated_canteen = self.getTextInputs()
+
+        for key in canteen_dictionary.keys():
+            if canteen_dictionary[key]["name"] == updated_canteen['name'] or canteen_dictionary[key]['address'] == updated_canteen['address']:
+                canteen_dictionary[key] = updated_canteen
+                # Calls onClearInputsButtonClicked() function to remove all data in textinputs
+                displayPopup("Success!","Canteen details updated successfully","Dismiss")
+                self.onClearInputsButtonClicked()
+
+
 
     # This function is called when the delete button on the edit screen is pressed
-    # It is responsible for deleting the a canteen from the canteen dictionary
+    # It is responsible for deleting the a chosen canteen from the canteen dictionary
     def onDeleteButtonClicked(self):
+        # Console debugging
         print("Edit Screen Delete Button Clicked")
+
+        # Retrieves the string from name textinput and address textinput
+        name = self.ids.edit_name_textinput.text.strip()
+        address = self.ids.edit_address_textinput.text.strip()
+
+        # Iterates through all the keys in canteen_dictionary
+        for key in canteen_dictionary.keys():
+            # If canteen name and address equals to user's input name and address
+            if canteen_dictionary[key]['name'] == name and canteen_dictionary[key]['address'] == address:
+                # Deletes canteen from canteen_dictionary
+                # Break out of the iteration
+                del canteen_dictionary[key]
+                break
+        else:
+            # If no such canteen exists in canteen_dictionary database, display popup
+            displayPopup("No such canteen", "Canteen cannot be found in database", "Dismiss")
+
+        # Function declared in this module
+        self.onRefreshButtonClicked()
+        self.onClearInputsButtonClicked()
 
     # This function gets all the text in the text inputs
     # Returns a dictionary with appropriate key-value pairs
@@ -204,11 +229,11 @@ class EditScreen(Screen):
             new_canteen['closing_time'] = new_closing_hour_str
 
             new_x_coordinate_str = self.ids.edit_x_coordinates_textinput.text.strip()
-            new_x_coordinate_int = int(new_x_coordinate_str)
+            new_x_coordinate_int = float(new_x_coordinate_str)
             new_canteen['x_coordinate'] = new_x_coordinate_int
 
             new_y_coordinate_str = self.ids.edit_y_coordinates_textinput.text.strip()
-            new_y_coordinate_int = int(new_y_coordinate_str)
+            new_y_coordinate_int = float(new_y_coordinate_str)
             new_canteen['y_coordinate'] = new_y_coordinate_int
 
             new_halal_food_str = self.ids.edit_halal_food_store_textinput.text.strip()
@@ -218,7 +243,6 @@ class EditScreen(Screen):
             new_vegetarian_food_str = self.ids.edit_vegetarian_food_store_textinput.text.strip()
             new_vegetarian_food_str_list = [x.strip() for x in new_vegetarian_food_str.split(',')]
             new_canteen['vegetarian_foodstall'] = new_vegetarian_food_str_list
-
 
             new_popular_food_str = self.ids.edit_popular_food_store_textinput.text.strip()
             new_popular_food_str_list = [x.strip() for x in new_popular_food_str.split(',')]
@@ -244,9 +268,69 @@ class EditScreen(Screen):
 
         except Exception:
             # Console debugging
-            print(type(Exception))
+            print(Exception)
 
-            # Function from utility.py to display popup
-            displayPopup("Please enter valid inputs!","Please enter valid inputs!","Dismiss")
+            return None
 
+    # This function is called when an item in the listview is selected
+    # Returns the address of the selected canteen
+    def onListItemSelected(self, instance):
+        print("Item selected")
 
+        # Retrieves the string inside the item selected in the listview
+        element = self.ids.edit_screen_listview.adapter.selection[0].text
+
+        # Retrieves the address of the selected item and removes trailing whitespaces
+        address = element.split(",Address:")[1].strip()
+
+        # Console debugging
+        print(address)
+
+        # This function retrieves the selected canteen from my_data database
+        # and appends all the values into the edittext
+        self.appendDataToListView(address)
+
+    # Retrieves the canteen in the my_data database using the "address" key
+    # Proceeds to append to the canteen's value into the respective edittext
+    def appendDataToListView(self, address):
+        for key in canteen_dictionary.keys():
+            if canteen_dictionary[key]["address"] == address:
+                selected_canteen = canteen_dictionary[key]
+                print(selected_canteen)
+
+                self.ids.edit_address_textinput.text = selected_canteen['address']
+                self.ids.edit_name_textinput.text = selected_canteen['name']
+                self.ids.edit_tel_textinput.text = selected_canteen['tel']
+                self.ids.edit_seating_capacity_textinput.text = str(selected_canteen['seating_capacity'])
+                self.ids.edit_rating_textinput.text = str(selected_canteen['rating'])
+                self.ids.edit_average_price_textinput.text = str(selected_canteen['average_price'])
+                self.ids.edit_no_of_stores_textinput.text = str(selected_canteen['no_of_stores'])
+                self.ids.edit_opening_hour_textinput.text = selected_canteen['opening_time']
+                self.ids.edit_closing_hour_textinput.text = selected_canteen['closing_time']
+                self.ids.edit_x_coordinates_textinput.text = str(selected_canteen['x_coordinate'])
+                self.ids.edit_y_coordinates_textinput.text = str(selected_canteen['y_coordinate'])
+
+                halal_foodstalls_list = selected_canteen['halal_foodstall']
+                halal_food_stalls_str = ",".join(halal_foodstalls_list)
+                self.ids.edit_halal_food_store_textinput.text = halal_food_stalls_str
+
+                vegetarian_foodstalls_list = selected_canteen['vegetarian_foodstall']
+                vegetarian_foodstalls_str = ",".join(vegetarian_foodstalls_list)
+                self.ids.edit_vegetarian_food_store_textinput.text = vegetarian_foodstalls_str
+
+                popular_foodstalls_list = selected_canteen['popular_food']
+                popular_foodstalls_str = ",".join(popular_foodstalls_list)
+                self.ids.edit_popular_food_store_textinput.text = popular_foodstalls_str
+
+        # This function clears all the data current in my_data
+        # Deletes all the data current shown in the listview
+
+    # This function clears all the data current in my_data
+    # Deletes all the data current shown in the listview
+    def clearDataInListView(self):
+
+        # Clears all data currently in my_data
+        self.my_data.clear()
+
+        # Deletes all the data current shown in the listview
+        del self.ids.edit_screen_listview.adapter.data[:]

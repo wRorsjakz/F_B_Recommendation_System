@@ -164,7 +164,7 @@ ScreenManagement:
 
 <EditScreen>:
     name:"EditScreen"
-    #edit_screen_listview:edit_screen_listview
+    edit_screen_listview:edit_screen_listview
     BoxLayout:
         orientation:'vertical'
         padding: 8
@@ -176,7 +176,7 @@ ScreenManagement:
                 ListAdapter(
                 data = root.my_data,
                 selection_mode = 'single',
-                cls =ListItemButton,
+                cls = ListItemButton,
                 args_converter=lambda row_index, an_obj: {'text': an_obj,'size_hint_y': None,'height': 55, 'font_size': 14},
                 allow_empty_selection = True
                 )
@@ -349,3 +349,4 @@ ScreenManagement:
                 text:"Chosen:"
                 id: chosen_coordinate_id
                 font_size:14
+

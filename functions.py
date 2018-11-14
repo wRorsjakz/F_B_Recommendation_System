@@ -1,7 +1,8 @@
 # Import square root function from math module
 from math import sqrt
 from data import canteen_dictionary
-from utility import bubblesort_food, retrieveType
+from utility import retrieveType
+from bubble_sort import bubblesort_food
 
 # Start of function
 def calculateDistance(user_x,user_y,canteen_x,canteen_y):
