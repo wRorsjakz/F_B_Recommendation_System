@@ -1,3 +1,6 @@
+#Done by He Wanru
+
+# Strings
 name_key = "name"
 address_key = "address"
 
@@ -31,11 +34,13 @@ vegetarian_foodstall_key = "vegetarian_foodstall"
 # List of stores that have halal food
 halal_foodstall_key = "halal_foodstall"
 
+# Done by Gan Shyan
 # A list of the keys in the each canteen's dictionary
 keys = [name_key,address_key,x_coordinate_key,y_coordinate_key,tel_key,opening_time_key,closing_time_key,
         no_of_stores_key,seating_capacity_key,average_price_key,rating_key,popular_food_key,halal_foodstall_key,
         vegetarian_foodstall_key]
 
+# Done by Gan Shyan
 # Creates an empty dictionary with key-value pairs with each Value a None object
 # Using dict.fromkeys() function. Takes in a list of keys
 def createEmptyCanteen(list_of_keys):

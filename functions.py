@@ -4,22 +4,7 @@ from data import canteen_dictionary
 from utility import retrieveType
 from bubble_sort import bubblesort_food
 
-# Start of function
-def calculateDistance(user_x,user_y,canteen_x,canteen_y):
-
-    # Calculate the horizontal component of the distance between the user and the canteen
-    distance_x = abs(user_x - canteen_x)
-
-    # Calculate the vertical component of the distance between the user and the canteen
-    distance_y = abs(user_y - canteen_y)
-
-    # Calculate the total linear distance between the user and the canteen
-    distance = sqrt(distance_x**2 + distance_y**2)
-
-    # Return the total linear distance between the user and the canteen
-    return distance
-
-
+#Done by He Wanru
 #This function sorts the ratings of each canteen by ascending order for user reference.
 #This sorting function consists of 2 parts:
 #   1) appending values of the main dictionary into an empty list
@@ -48,7 +33,7 @@ def sort_by_rank(canteen):
         temp.append(place[0] + " : " + str(place[1]))
     return temp
 
-
+# Done by He Wanru
 # This search function enables users to refer to a list of canteens with average price lower or equals to how much they are willing to spend on a meal.
 # This search function consists of 3 parts:
 #   1) fetching of data from "canteen_dictionary"
@@ -82,7 +67,7 @@ def search_by_price(canteen, price):
         temp.append(place[0] + " : " + str(place[1]))
     return temp
 
-
+# Done by He Wanru
 #This function sorts the average prices of each canteen by ascending order for user reference.
 #This sorting function consists of 2 parts: appending values of the main dictionary into an empty list and the sorting itself.
 #This is the main function which appends the values from the main dictionary ("canteen_dictionary") into an empty list and calls the bubble sort function.
@@ -109,7 +94,7 @@ def sort_by_price(canteen):
         temp.append(place[0] + " : " + str(place[1]))
     return temp
 
-
+# Done by He Wanru
 # This function sorts the seating capacity of each canteen by ascending order for user reference.
 # This sorting function consists of 2 parts: appending values of the main dictionary
 # into an empty list and the sorting itself.
@@ -215,30 +200,6 @@ def findByName(canteen, canteen_name):
 
     # Return the dictionary containing dictionaries of canteens similar to requested canteen
     return canteen_match
-
-##################################################################################################################################
-# Function: Retrieve halal foodstalls of canteens
-# This function retrieves a list containing canteen names (string) and lists of halal foodstalls (string) in the canteens.
-# Inputs:
-#   Canteen database as canteen (dictionary)
-# To call function:
-#   retrieveHalal(canteen)
-# Written on 02/11/2018 by Goh Yun Si
-##################################################################################################################################
-
-
-##################################################################################################################################
-# Function: Retrieve halal foodstalls of canteens
-# This function retrieves the halal foodstalls of all canteens.
-# A list containing strings of canteen names and names of halal foodstalls in the canteens is returned.
-# Inputs:
-#   Canteen database as canteen (dictionary)
-# To call function:
-#   retrieveHalal(canteen)
-# Written on 02/11/2018 by Goh Yun Si
-# Last updated on 09/11/2018
-#############################################################################
-
 
 #############################################################################
 # Function: Retrieve halal foodstalls of canteens

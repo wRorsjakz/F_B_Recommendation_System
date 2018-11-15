@@ -1,13 +1,10 @@
 ########################################################################################################################
-# Function: Calculate distance between canteens and user
-# This function calculates the linear distances between the user and all canteens.
-# A sorted list containing canteen names (string) and their linear distances (float) from the user is returned.
+# Function: Merge sort function
+# Sorts a list in ascending order.
 # Inputs:
-#   x-coordinates of the canteen as canteen_x (floar)
-#   y-coordinates of the canteen as canteen_y (float)
-#   Canteen database as canteen (dictionary)
+#   Unsorted canteen distance list as cantee_distance_unsorted
 # To call function:
-#   calculateDistance(user_x,user_y,canteen)
+#   mergeSort(canteen_distance_unsorted)
 # Written on 28/10/2018 by Goh Yun Si
 # Last updated on 09/11/2018
 ########################################################################################################################

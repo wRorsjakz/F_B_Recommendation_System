@@ -148,12 +148,17 @@ class EditScreen(Screen):
         # Calls .getTextInputs() function to retrieve new inputs from textinputs
         updated_canteen = self.getTextInputs()
 
-        for key in canteen_dictionary.keys():
-            if canteen_dictionary[key]["name"] == updated_canteen['name'] or canteen_dictionary[key]['address'] == updated_canteen['address']:
-                canteen_dictionary[key] = updated_canteen
-                # Calls onClearInputsButtonClicked() function to remove all data in textinputs
-                displayPopup("Success!","Canteen details updated successfully","Dismiss")
-                self.onClearInputsButtonClicked()
+        # .getTextInputs() returns None object with there are invalid text inputs
+        if updated_canteen != None:
+            for key in canteen_dictionary.keys():
+                if canteen_dictionary[key]["name"] == updated_canteen['name'] or canteen_dictionary[key]['address'] == updated_canteen['address']:
+                    canteen_dictionary[key] = updated_canteen
+                    # Calls onClearInputsButtonClicked() function to remove all data in textinputs
+                    displayPopup("Success!","Canteen details updated successfully","Dismiss")
+                    self.onClearInputsButtonClicked()
+        else:
+            # If updated_canteen is None Object due to invalid textinput
+            displayPopup("Invalid entries!", "Please enter valid fields!","Understood")
 
     # This function is called when the delete button on the edit screen is pressed
     # It is responsible for deleting the a chosen canteen from the canteen dictionary

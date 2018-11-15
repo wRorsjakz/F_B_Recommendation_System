@@ -3,7 +3,7 @@ from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 
-from merge_sort import mergeList,mergeSort
+from merge_sort import mergeSort
 
 ####################################################################
 # Function: Retrieve different types (halal/vegetarian) of foodstalls of canteens
@@ -44,7 +44,19 @@ def retrieveType(canteen, key):
     return canteen_type
 
 
-#################################################### MAIN FUNCTION #####################################################
+########################################################################################################################
+# Function: Calculate distance between canteens and user
+# This function calculates the linear distances between the user and all canteens.
+# A sorted list containing canteen names (string) and their linear distances (float) from the user is returned.
+# Inputs:
+#   x-coordinates of the canteen as canteen_x (floar)
+#   y-coordinates of the canteen as canteen_y (float)
+#   Canteen database as canteen (dictionary)
+# To call function:
+#   calculateDistance(user_x,user_y,canteen)
+# Written on 28/10/2018 by Goh Yun Si
+# Last updated on 09/11/2018
+########################################################################################################################
 
 # Import square root function from math module
 from math import sqrt
@@ -81,7 +93,7 @@ def calculateDistance(user_x, user_y, canteen):
     # Return the sorted list of canteen names and their linear distances from the user
     return canteen_dist_sorted
 
-
+# Done by Gan Shyan
 # Displays popup on screen with one button to dismiss it
 # Takes in 3 arguements - title: Title of the popup; label_message: message inside the popup
 # button_message - Text shown on the button

@@ -1,19 +1,19 @@
 import kivy
-
 kivy.require('1.9.0')
 
 from kivy.config import Config
-
 # This prevents the window from being resized
 Config.set('graphics', 'resizable', False)
 from kivy.core.window import Window
-
+# This sets the colour of the window background
 Window.clearcolor = (0.2, 0.2, 0.2, 0.5)
+# Sets the size of the window
 Window.size = (800, 700)
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import Screen
 from kivy.properties import ListProperty
 
+# Module imports
 from data import canteen_dictionary
 import functions
 from utility import displayPopup, calculateDistance
@@ -25,6 +25,7 @@ class MainScreen(Screen):
     def __init__(self, *args, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
 
+    # Called before the screen is initialised
     def on_pre_enter(self):
         self.callBack()
 
@@ -49,6 +50,7 @@ class MainScreen(Screen):
     # When a data is appended to my_data, it will be displayed in the listview
     my_data = ListProperty()
 
+    # Done by Gan Shyan
     # This function is called when the Search by Name button is pressed
     def onSearchNameBtnClicked(self):
         # Console debugging
@@ -95,6 +97,7 @@ class MainScreen(Screen):
                     # Append to my_data to be shown in the listview
                     self.my_data.append(string)
 
+    # Done by Gan Shyan
     # This function is called when the Search by Price button is pressed
     def onSearchByPriceBtnClicked(self):
         # Console debugging
@@ -123,6 +126,7 @@ class MainScreen(Screen):
             for i in result:
                 self.my_data.append(i)
 
+    # Done by Gan Shyan
     # This function is called when the Search by Food Button is pressed
     # It calls the utility.findByFood function
     def onSearchFoodBtnClicked(self):
@@ -157,6 +161,7 @@ class MainScreen(Screen):
                 for i in range(0, result_canteen_by_food.__len__(), 1):
                     self.my_data.append(result_canteen_by_food[i])
 
+    # Done by Gan Shyan
     # This function is called when Sort By Rating button is pressed
     # It calls the functions.sort_by_rank function
     def onSortByRankBtnClicked(self):
@@ -166,6 +171,7 @@ class MainScreen(Screen):
         # Function declared below
         self.clearDataInListView()
 
+        # Retrieves the sorted list
         sorted_list = functions.sort_by_rank(canteen_dictionary)
 
         # Iterates through the 'sorted_list' list
@@ -177,6 +183,7 @@ class MainScreen(Screen):
             # Append each string onto the listview
             self.my_data.append(string)
 
+    # Done by Gan Shyan
     # This function is called when Sort By Price button is pressed
     # It calls the functions.sort_by_price function
     def onSortByPriceBtnClicked(self):
@@ -199,6 +206,7 @@ class MainScreen(Screen):
             self.ids.main_screen_listview.adapter.data = self.my_data
             self.ids.main_screen_listview._trigger_reset_populate()
 
+    # Done by Gan Shyan
     # This function is called when Sort By Seating Capacity button is pressed
     # It calls the functions.sort_by_seating_capacity() function
     def onSortBySeatingCapacityBtnClicked(self):
@@ -225,6 +233,7 @@ class MainScreen(Screen):
             self.ids.main_screen_listview.adapter.data = self.my_data
             self.ids.main_screen_listview._trigger_reset_populate()
 
+    # Done by Gan Shyan
     # This function is called when All Halal Food button is clicked
     # It calls the functions.retrieveHalal() function
     def onSearchHalalFoodBtnClicked(self):
@@ -251,6 +260,7 @@ class MainScreen(Screen):
             self.ids.main_screen_listview.adapter.data = self.my_data
             self.ids.main_screen_listview._trigger_reset_populate()
 
+    # Done by Gan Shyan
     # This function is called when All Vegetarian Food button is clicked
     # It calls the functions.retrieveVegetarian() function
     def onSearchVegetarianBtnClicked(self):
@@ -277,6 +287,7 @@ class MainScreen(Screen):
         self.ids.main_screen_listview.adapter.data = self.my_data
         self.ids.main_screen_listview._trigger_reset_populate()
 
+    # Done by Gan Shyan
     # This function is called when the find nearest F&B location button is pressed
     # Calls the calculateDistance() function from utility module
     def onSearchNearestBtnClicked(self):
@@ -336,6 +347,7 @@ class MainScreen(Screen):
             displayPopup("Please choose your current location first",
                          "What is your current location?", "Got it!")
 
+    # Done by Gan Shyan
     # This function is called when the clear button is pressed
     # It clears all the text inputs in the MainScreen GUI
     # It also calls clearDataInListView()
@@ -350,6 +362,7 @@ class MainScreen(Screen):
 
         # Function declared below
         self.clearDataInListView()
+
 
     # This function gets the string in the canteen name text input
     # And returns the string
@@ -395,6 +408,7 @@ class MainScreen(Screen):
 
             return -1
 
+    # Done by Gan Shyan
     # This function clears all the data current in my_data
     # Deletes all the data current shown in the listview
     def clearDataInListView(self):
