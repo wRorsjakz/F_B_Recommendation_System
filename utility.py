@@ -3,6 +3,7 @@ from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 
+# Import merge_sort function from mergeSort module
 from merge_sort import mergeSort
 
 ####################################################################

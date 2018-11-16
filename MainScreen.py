@@ -29,6 +29,7 @@ class MainScreen(Screen):
     def on_pre_enter(self):
         self.callBack()
 
+    # Done by Gan Shyan
     # Called the every time the screen is initialised
     def callBack(self):
         # Console debugging
@@ -175,7 +176,7 @@ class MainScreen(Screen):
         sorted_list = functions.sort_by_rank(canteen_dictionary)
 
         # Iterates through the 'sorted_list' list
-        for element in sorted_list:
+        for element in reversed(sorted_list):
             # Console debugging
             print(element)
             # Format string
@@ -220,7 +221,7 @@ class MainScreen(Screen):
         sorted_list = functions.sort_by_seating_capacity(canteen_dictionary)
 
         # Iterates through the 'sorted_list' list
-        for element in sorted_list:
+        for element in reversed(sorted_list):
             # Console debugging
             print(element)
             # Format string
@@ -379,6 +380,7 @@ class MainScreen(Screen):
             print(Exception)
             self.ids.name_textinput_id.text = "Error"
 
+    # Done by Gan Shyan
     # This function gets the text input from the max_price input text widget
     # It checks that the input from the inputtext is valid
     # If the user's input is not valid, it returns -1

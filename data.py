@@ -54,8 +54,9 @@ def createEmptyCanteen(list_of_keys):
 
     return empty_dictionary
 
-
+# Done by He Wanru
 # A nested dictionary of canteens
+# Each canteen is an individual dictionary
 canteen_dictionary = {1:{name_key:"canteen 1", address_key:"21 NANYANG CIRCLE, SINGAPORE 639778, HALL 1",
                          x_coordinate_key:448.0,y_coordinate_key:240.0,
                          tel_key:"6334 3033", opening_time_key:"07 00",closing_time_key:"21 00",no_of_stores_key:9,

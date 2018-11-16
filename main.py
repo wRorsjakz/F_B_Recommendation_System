@@ -31,10 +31,12 @@ class MapScreen(Screen):
         # Binds the mouse_pos() function to the window -- the coordinates of the mouse is continuously retrieved.
         Window.bind(mouse_pos=self.mouse_pos)
 
+    # Done by Gan Shyan
     # This function retrieves the coordinates of the mouse cursor on the map
     def mouse_pos(self,window,pos):
         self.ids.cursor_coordinate_id.text = "Cursor: " + str(pos)
 
+    # Done by Gan Shyan
     # This function is called when the user clicks on the map.
     # NOTE: It does not call when the user clicks outside of the map
     # It retrieves the coordinates of the user's click
@@ -51,6 +53,7 @@ class MapScreen(Screen):
         # Console debugging
         print("Coordinate of cursor click:",coordinates)
 
+    # Done by Gan Shyan
     # Function is called when the back button is pressed
     def onBackBtnPressed(self):
         # Resets the chosen_coordinate_id text to an empty string

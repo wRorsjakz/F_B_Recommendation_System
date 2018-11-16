@@ -31,6 +31,7 @@ class EditScreen(Screen):
     # When a data is appended to my_data, it will be displayed in the listview
     my_data = ListProperty()
 
+    # Called before the screen is initialised
     def on_pre_enter(self):
         self.callBack()
 
@@ -39,9 +40,11 @@ class EditScreen(Screen):
         # Console debugging
         print("EditScreen: Initialising... ")
 
-        # self.my_data.clear()
+        # Calls the function retrieveDataForListView() (declared below) function which retrieves
+        # all the data in database and displays the data in listview
         self.retrieveDataForListView()
 
+    # Done by Gan Shyan
     # This method retrieves the data from the canteen_dictionary and formats the data
     # It then displays each piece of data in the listview
     def retrieveDataForListView(self):
@@ -74,13 +77,14 @@ class EditScreen(Screen):
             # Will trigger the onListItemSelected() function whenever an item in the listview is clicked
             self.ids.edit_screen_listview.adapter.bind(on_selection_change=self.onListItemSelected)
 
+    # Done by Gan Shyan
     # This function is called when the Clear Inputs button is pressed
     # It clears all the textinput
     def onClearInputsButtonClicked(self):
         # Console debugging
         print("Edit Screen Clear button clicked")
 
-        # Clear all textinputs
+        # Clear all textinputs by appending empty strings
         self.ids.edit_name_textinput.text = ""
         self.ids.edit_address_textinput.text = ""
         self.ids.edit_tel_textinput.text = ""
@@ -109,6 +113,7 @@ class EditScreen(Screen):
         # This function retrieves the data from the canteen_dictionary to be displayed for the listview
         self.retrieveDataForListView()
 
+    # Done by Gan Shyan
     # Function called when Insert Button is pressed
     # Inserts a new canteen dictionary into canteen_dictionary
     def onInsertButtonClicked(self):
@@ -140,6 +145,7 @@ class EditScreen(Screen):
             # Display a popup when there are None objects in the new_canteen dictionary
             displayPopup("Please enter valid inputs!", "Please enter valid inputs!", "Dismiss")
 
+    # Done by Gan Shyan
     # This function is called when the Update button on the edit screen is pressed
     def onUpdateButtonClicked(self):
         # Console Debugging
@@ -160,6 +166,7 @@ class EditScreen(Screen):
             # If updated_canteen is None Object due to invalid textinput
             displayPopup("Invalid entries!", "Please enter valid fields!","Understood")
 
+    # Done by Gan Shyan
     # This function is called when the delete button on the edit screen is pressed
     # It is responsible for deleting the a chosen canteen from the canteen dictionary
     def onDeleteButtonClicked(self):
@@ -186,6 +193,7 @@ class EditScreen(Screen):
         self.onRefreshButtonClicked()
         self.onClearInputsButtonClicked()
 
+    # Done by Gan Shyan
     # This function gets all the text in the text inputs
     # Returns a dictionary with appropriate key-value pairs
     def getTextInputs(self):
@@ -272,9 +280,9 @@ class EditScreen(Screen):
         except Exception:
             # Console debugging
             print(Exception)
-
             return None
 
+    # Done by Gan Shyan
     # This function is called when an item in the listview is selected
     # Returns the address of the selected canteen
     def onListItemSelected(self, instance):
@@ -298,6 +306,7 @@ class EditScreen(Screen):
         except:
             print("onListItemSelected exception")
 
+    # Done by Gan Shyan
     # Retrieves the canteen in the my_data database using the "address" key
     # Proceeds to append to the canteen's value into the respective edittext
     def appendDataToListView(self, address):
@@ -330,9 +339,7 @@ class EditScreen(Screen):
                 popular_foodstalls_str = ",".join(popular_foodstalls_list)
                 self.ids.edit_popular_food_store_textinput.text = popular_foodstalls_str
 
-        # This function clears all the data current in my_data
-        # Deletes all the data current shown in the listview
-
+    # Done by Gan Shyan
     # This function clears all the data current in my_data
     # Deletes all the data current shown in the listview
     def clearDataInListView(self):

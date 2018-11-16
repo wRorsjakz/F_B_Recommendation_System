@@ -1,37 +1,36 @@
-# Import square root function from math module
-from math import sqrt
-from data import canteen_dictionary
+# Import functions from modules
 from utility import retrieveType
 from bubble_sort import bubblesort_food
 
-#Done by He Wanru
-#This function sorts the ratings of each canteen by ascending order for user reference.
-#This sorting function consists of 2 parts:
+
+# Done by He Wanru
+# This function sorts the ratings of each canteen by ascending order for user reference.
+# This sorting function consists of 2 parts:
 #   1) appending values of the main dictionary into an empty list
 #   2) the sorting itself.
 
-#This is the main function which appends the values from the main dictionary ("canteen_dictionary") into an empty list and calls the bubble sort function.
+# This is the main function which appends the values from the main dictionary ("canteen_dictionary") into an empty list and calls the bubble sort function.
 def sort_by_rank(canteen):
-
-    #An empty list, "canteen_rank" is created for appending of values from the main dictionary
+    # An empty list, "canteen_rank" is created for appending of values from the main dictionary
     canteen_rank = []
 
-    #Another empty list, "temp", is created to convert the lists within "canteen_rating" into strings with the following format
+    # Another empty list, "temp", is created to convert the lists within "canteen_rating" into strings with the following format
     temp = []
 
-    #The name value and rating value are appended into the "canteen_rank"
+    # The name value and rating value are appended into the "canteen_rank"
     for ID in list(canteen.keys()):
         canteen_name = canteen[ID]["name"]
         ranking = canteen[ID]["rating"]
         canteen_rank.append([canteen_name, ranking])
 
-    #The bubble sort function is called to sort the ratings in ascending order and a new sorted list "canteen_rating" is created
+    # The bubble sort function is called to sort the ratings in ascending order and a new sorted list "canteen_rating" is created
     canteen_rating = bubblesort_food(canteen_rank)
 
-    #The lists in "canteen_rating" are converted to strings for greater readability.
+    # The lists in "canteen_rating" are converted to strings for greater readability.
     for place in canteen_rating:
         temp.append(place[0] + " : " + str(place[1]))
     return temp
+
 
 # Done by He Wanru
 # This search function enables users to refer to a list of canteens with average price lower or equals to how much they are willing to spend on a meal.
@@ -67,32 +66,33 @@ def search_by_price(canteen, price):
         temp.append(place[0] + " : " + str(place[1]))
     return temp
 
-# Done by He Wanru
-#This function sorts the average prices of each canteen by ascending order for user reference.
-#This sorting function consists of 2 parts: appending values of the main dictionary into an empty list and the sorting itself.
-#This is the main function which appends the values from the main dictionary ("canteen_dictionary") into an empty list and calls the bubble sort function.
-def sort_by_price(canteen):
 
-    #An empty list, "canteen_price1" is created for appending of values from the main dictionary
+# Done by He Wanru
+# This function sorts the average prices of each canteen by ascending order for user reference.
+# This sorting function consists of 2 parts: appending values of the main dictionary into an empty list and the sorting itself.
+# This is the main function which appends the values from the main dictionary ("canteen_dictionary") into an empty list and calls the bubble sort function.
+def sort_by_price(canteen):
+    # An empty list, "canteen_price1" is created for appending of values from the main dictionary
     canteen_price1 = []
 
-    #Another empty list, "temp", is created to convert the lists within "canteen_price2" into strings with the following format
+    # Another empty list, "temp", is created to convert the lists within "canteen_price2" into strings with the following format
     temp = []
 
-    #The name value and average price value are appended into the "canteen_price1"
+    # The name value and average price value are appended into the "canteen_price1"
     for ID in list(canteen.keys()):
         canteen_name = canteen[ID]["name"]
         prices = canteen[ID]["average_price"]
         canteen_price1.append([canteen_name, prices])
 
-    #The bubble sort function is called to sort the average prices in ascending order and a new sorted list "canteen_price2" is created
+    # The bubble sort function is called to sort the average prices in ascending order and a new sorted list "canteen_price2" is created
     from bubble_sort import bubblesort_food
     canteen_price2 = bubblesort_food(canteen_price1)
 
-    #The lists in "canteen_price2" are converted to strings for greater readability.
+    # The lists in "canteen_price2" are converted to strings for greater readability.
     for place in canteen_price2:
         temp.append(place[0] + " : " + str(place[1]))
     return temp
+
 
 # Done by He Wanru
 # This function sorts the seating capacity of each canteen by ascending order for user reference.
@@ -102,24 +102,23 @@ def sort_by_price(canteen):
 # into an empty list and calls the bubble sort function.
 
 def sort_by_seating_capacity(canteen):
-
-    #An empty list, "canteen_seat" is created for appending of values from the main dictionary
+    # An empty list, "canteen_seat" is created for appending of values from the main dictionary
     canteen_seat = []
 
-    #Another empty list, "temp", is created to convert the lists within "canteen_capacity" into strings with the following format
+    # Another empty list, "temp", is created to convert the lists within "canteen_capacity" into strings with the following format
     temp = []
 
-    #The name value and seating capacity value are appended into the "canteen_seat"
+    # The name value and seating capacity value are appended into the "canteen_seat"
     for ID in list(canteen.keys()):
         canteen_name = canteen[ID]["name"]
         seating = canteen[ID]["seating_capacity"]
         canteen_seat.append([canteen_name, seating])
 
-    #The bubble sort function is imported to sort the seating capacities in ascending order and a new sorted list "canteen_capacity" is created
+    # The bubble sort function is imported to sort the seating capacities in ascending order and a new sorted list "canteen_capacity" is created
     from bubble_sort import bubblesort_food
     canteen_capacity = bubblesort_food(canteen_seat)
 
-    #The lists in "canteen_capacity" are converted to strings for greater readability.
+    # The lists in "canteen_capacity" are converted to strings for greater readability.
     for place in canteen_capacity:
         temp.append(place[0] + " : " + str(place[1]))
     return temp
@@ -128,14 +127,14 @@ def sort_by_seating_capacity(canteen):
 ########################################################################################################################
 # Function: Find canteens by food
 # This function finds the canteens with the food requested by the user.
-# A list containing the canteen names (string) and lists of food similar to the requested food (string) is returned.
+# A list containing the strings of canteen names food similar to the requested food is returned.
 # Inputs:
 #   Canteen database as canteen (dictionary)
 #   Food requested by user as input_food (string)
 # To call function:
 #   findByFood(canteen, input_food)
 # Written on 31/10/2018 by Goh Yun Si
-# Last updated on 09/11/2018
+# Last up dated on 09/11/2018
 ########################################################################################################################
 
 # Start of function
@@ -173,6 +172,20 @@ def findByFood(canteen, input_food):
     # Return the list containing the canteen names and lists of food similar to the requested food
     return canteen_match
 
+
+########################################################################################################################
+# Function: Find canteens by name
+# This function finds the canteens with the name specified by the user.
+# A dictionary containing the dictionaries of the canteens requested is returned.
+# Inputs:
+#   Canteen database as canteen (dictionary)
+#   Canteen name as canteen_name
+# To call function:
+#   findByName(canteen, canteen_name)
+# Written on 31/10/2018 by Goh Yun Si
+# Last updated on 09/11/2018
+########################################################################################################################
+
 # Start of function
 # This functions loops through a dictionary to search for a canteen with the same/similar name
 def findByName(canteen, canteen_name):
@@ -201,6 +214,7 @@ def findByName(canteen, canteen_name):
     # Return the dictionary containing dictionaries of canteens similar to requested canteen
     return canteen_match
 
+
 #############################################################################
 # Function: Retrieve halal foodstalls of canteens
 # This function retrieves the halal foodstalls of all canteens.
@@ -213,7 +227,6 @@ def findByName(canteen, canteen_name):
 # Last updated on 09/11/2018
 #############################################################################
 def retrieveHalal(canteen):
-
     # Retrieves a list of canteen names and names of halal foodstalls in the canteens
     canteen_halal = retrieveType(canteen, "halal_foodstall")
 
@@ -235,15 +248,8 @@ def retrieveHalal(canteen):
 
 # Start of function
 def retrieveVegetarian(canteen):
-    # Import function that retrieves a list of canteen names and specific types (vegetarian/halal) of foodstalls in the canteens
-
     # Retrieves a list of canteen names and names of vegetarian foodstalls in the canteens
     canteen_vegetarian = retrieveType(canteen, "vegetarian_foodstall")
 
     # Return the list containing canteen names and names of vegetarian foodstalls in the canteens
     return canteen_vegetarian
-
-
-
-
-
